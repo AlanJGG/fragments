@@ -11,5 +11,8 @@
     "url": "git+https://github.com/AlanJGG/fragments.git"
   },
   "author": "Alan Guzman",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "prettier": "3.9.6"
+  }
 }
