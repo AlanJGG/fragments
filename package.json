@@ -4,11 +4,11 @@
   "version": "0.0.1",
   "description": "BTI525NBB - Lab 01",
   "scripts": {
-  "test": "echo \"Error: no test specified\" && exit 1",
-  "lint": "eslint \"./src/**/*.js\"",
-  "start": "node src/server.js",
-  "dev": "node --env-file=.env.debug --watch ./src/server.js",
-  "debug": "node --env-file=.env.debug --inspect=0.0.0.0:9229 --watch ./src/server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"./src/**/*.js\"",
+    "start": "node src/server.js",
+    "dev": "node --env-file=.env.debug --watch ./src/server.js",
+    "debug": "node --env-file=.env.debug --inspect=0.0.0.0:9229 --watch ./src/server.js"
   },
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
     "express": "^5.2.1",
     "helmet": "^8.3.0",
     "pino": "^10.3.1",
