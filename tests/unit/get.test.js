@@ -7,7 +7,7 @@ const app = require('../../src/app');
 describe('GET /v1/fragments', () => {
   // Missing Authorization header should be denied
   test('unauthenticated requests are denied', () =>
-    request(app).get('/v1/fragments').expect(500));
+    request(app).get('/v1/fragments').expect(401));
 
   // Invalid username/password should also be denied
   test('incorrect credentials are denied', () =>
