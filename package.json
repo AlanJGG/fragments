@@ -2,7 +2,7 @@
   "name": "fragments",
   "private": true,
   "version": "0.0.1",
-  "description": "BTI525NBB - Lab 01",
+  "description": "BTI525NBB - Fragments Microservice",
   "scripts": {
     "lint": "eslint \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
