@@ -2,7 +2,7 @@
   "name": "fragments",
   "private": true,
   "version": "0.0.1",
-  "description": "BTI525NBB - Lab 01",
+  "description": "BTI525NBB - Fragments Microservice",
   "scripts": {
     "lint": "eslint \"./src/**/*.js\" \"tests/**/*.js\"",
     "start": "node src/index.js",
@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "aws-jwt-verify": "^5.2.1",
+    "content-type": "^1.0.5",
     "cors": "^2.8.6",
     "dotenv": "^18.0.5",
     "express": "^5.2.1",

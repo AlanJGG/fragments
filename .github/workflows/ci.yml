@@ -46,5 +46,8 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
-      - name: Install node dependencies and run Tests
-        run: npm install-ci-test
+      - name: Install node dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test
