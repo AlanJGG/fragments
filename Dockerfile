@@ -1,34 +1,36 @@
-# Dockerfile for the fragments microservice
-FROM node:24.21.0
-
-LABEL maintainer="Alan Joseph Guzman Gutierrez"
-LABEL description="Fragments Node.js microservice"
-
-# We default to use port 8080 in our service
-ENV PORT=8080
-
-# Reduce npm spam when installing within Docker
-# https://docs.npmjs.com/cli/v8/using-npm/config#loglevel
-ENV NPM_CONFIG_LOGLEVEL=warn
-
-# Disable colour when run inside Docker
-# https://docs.npmjs.com/cli/v8/using-npm/config#color
-ENV NPM_CONFIG_COLOR=false
+# Install dependencies
+FROM node:24.21.0-alpine AS dependencies
 
 WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci --omit=dev
 
-# Copy src/
-COPY ./src ./src
 
-# Copy our HTPASSWD file
-COPY ./tests/.htpasswd ./tests/.htpasswd
+# Production
+FROM node:24.21.0-alpine AS production
 
-# Run the server
-CMD ["npm", "start"]
+LABEL maintainer="Alan Joseph Guzman Gutierrez"
+LABEL description="Fragments Node.js microservice"
+
+ENV NODE_ENV=production
+ENV PORT=8080
+ENV NPM_CONFIG_LOGLEVEL=warn
+ENV NPM_CONFIG_COLOR=false
+
+WORKDIR /app
+
+# Copy production dependencies
+COPY --from=dependencies /app/node_modules ./node_modules
+
+# Copy application files
+COPY --chown=node:node package*.json ./
+COPY --chown=node:node ./src ./src
+COPY --chown=node:node ./tests/.htpasswd ./tests/.htpasswd
+
+USER node
 
 EXPOSE 8080
 
+CMD ["npm", "start"]
