@@ -29,7 +29,7 @@ COPY --chown=node:node package*.json ./
 COPY --chown=node:node ./src ./src
 COPY --chown=node:node ./tests/.htpasswd ./tests/.htpasswd
 
-USER node
+USER 1000
 
 EXPOSE 8080
 
