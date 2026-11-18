@@ -136,6 +136,10 @@ class Fragment {
    * @returns {Array<string>} list of supported mime types
    */
   get formats() {
+    if (this.mimeType === 'text/markdown') {
+      return ['text/markdown', 'text/html'];
+    }
+
     return [this.mimeType];
   }
 
@@ -147,7 +151,7 @@ class Fragment {
   static isSupportedType(value) {
     try {
       const { type } = contentType.parse(value);
-      return type === 'text/plain';
+      return type.startsWith('text/') || type === 'application/json';
     } catch {
       return false;
     }
