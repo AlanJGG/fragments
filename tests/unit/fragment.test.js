@@ -6,12 +6,13 @@ const wait = async (ms = 50) => new Promise((resolve) => setTimeout(resolve, ms)
 
 const validTypes = [
   `text/plain`,
-  /*
-   Currently, only text/plain is supported. Others will be added later.
-
   `text/markdown`,
   `text/html`,
+  `text/csv`,
   `application/json`,
+  /*
+   Currently, only text/* and application/json is supported. Others will be added later.
+
   `image/png`,
   `image/jpeg`,
   `image/webp`,
@@ -118,14 +119,24 @@ describe('Fragment class', () => {
   });
 
   describe('isSupportedType()', () => {
-    test('common text types are supported, with and without charset', () => {
+    test('common text and JSON types are supported', () => {
       expect(Fragment.isSupportedType('text/plain')).toBe(true);
-      expect(Fragment.isSupportedType('text/plain; charset=utf-8')).toBe(true);
+      expect(Fragment.isSupportedType('text/markdown')).toBe(true);
+      expect(Fragment.isSupportedType('text/html')).toBe(true);
+      expect(Fragment.isSupportedType('text/csv')).toBe(true);
+      expect(Fragment.isSupportedType('application/json')).toBe(true);
     });
 
-    test('other types are not supported', () => {
+    test('types with charset are supported', () => {
+      expect(Fragment.isSupportedType('text/plain; charset=utf-8')).toBe(true);
+      expect(Fragment.isSupportedType('text/markdown; charset=utf-8')).toBe(true);
+      expect(Fragment.isSupportedType('application/json; charset=utf-8')).toBe(true);
+    });
+
+    test('unsupported types are rejected', () => {
       expect(Fragment.isSupportedType('application/octet-stream')).toBe(false);
       expect(Fragment.isSupportedType('application/msword')).toBe(false);
+      expect(Fragment.isSupportedType('image/png')).toBe(false);
       expect(Fragment.isSupportedType('audio/webm')).toBe(false);
       expect(Fragment.isSupportedType('video/ogg')).toBe(false);
     });
@@ -167,6 +178,15 @@ describe('Fragment class', () => {
         size: 0,
       });
       expect(fragment.formats).toEqual(['text/plain']);
+    });
+
+    test('formats returns Markdown and HTML for Markdown fragments', () => {
+      const fragment = new Fragment({
+        ownerId: '1234',
+        type: 'text/markdown',
+      });
+
+      expect(fragment.formats).toEqual(['text/markdown', 'text/html']);
     });
   });
 
